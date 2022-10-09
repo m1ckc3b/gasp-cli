@@ -6,6 +6,14 @@
   "scripts": {
     "test": "node ./tests/tests.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m1ckc3b/gasp-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/m1ckc3b/gasp-cli/issues"
+  },
+  "homepage": "https://github.com/m1ckc3b/gasp-cli#readme",
   "bin": {
     "gasp": "./bin/index.js"
   },
