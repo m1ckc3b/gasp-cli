@@ -13,3 +13,5 @@ To retrieve the id of a gas project, just go to https://script.google.com, open 
 
 For more information about clasp command please check [the documentation](https://github.com/google/clasp#commands).
 
+[![clasp](https://img.shields.io/badge/built%20with-clasp-4285f4.svg)](https://github.com/google/clasp)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
