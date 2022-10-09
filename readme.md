@@ -8,3 +8,8 @@ With Gasp command automatically create a new node.js project including package.j
 npm install -g gasp-cli
 gasp create [project-name] [script-id]
 ```
+## How to get the script-id ?
+To retrieve the id of a gas project, just go to https://script.google.com, open the project and in the project settings tab, click on the "copy" button just at below the id.
+
+For more information about clasp command please check [the documentation](https://github.com/google/clasp#commands).
+
