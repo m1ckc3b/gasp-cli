@@ -4,7 +4,8 @@
   "description": "A cli to build a Google Apps Script Project Locally",
   "main": "./bin/index.js",
   "scripts": {
-    "test": "node ./tests/tests.js"
+    "test": "node ./tests/tests.js",
+    "build": "node ./bin/index.js"
   },
   "repository": {
     "type": "git",
