@@ -23,6 +23,5 @@
   "author": "m1ckc3b",
   "license": "MIT",
   "dependencies": {
-    "yargs": "^17.6.0"
   }
 }
