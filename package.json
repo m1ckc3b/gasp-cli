@@ -18,7 +18,7 @@
     "gasp": "./bin/index.js"
   },
   "keywords": [
-    "cli"
+    "cli", "node", "javascript", "google-apps-script", "script.google.com", "clasp"
   ],
   "author": "m1ckc3b",
   "license": "MIT",
