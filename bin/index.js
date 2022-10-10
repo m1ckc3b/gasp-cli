@@ -18,7 +18,7 @@ switch (dir) {
     );
 }
 
-function initProject(projectName) {
+function initProject(projectName, scriptId) {
   createFolder(projectName);
   createFile(projectName, "package.json", createPackageJsonFile(projectName, scriptId))
   createFile(projectName, ".gitignore", createGitignoreFile())
