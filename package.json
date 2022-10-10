@@ -1,6 +1,6 @@
 {
   "name": "gasp-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A cli to build a Google Apps Script Project Locally",
   "main": "./bin/index.js",
   "scripts": {
