@@ -20,8 +20,8 @@ export async function createProjectFolder(projectName) {
  * @param {*} dir
  * @param {*} name
  */
-export async function createSubfolder(projectName) {
-  const path = `${projectName}/gas`
+export async function createSubfolderDist(projectName) {
+  const path = `${projectName}/dist`
   try {
     await fs.access(path, fs.constants.F_OK)
   } catch (e) {
@@ -30,6 +30,15 @@ export async function createSubfolder(projectName) {
   }
 }
 
+export async function createSubfolderSrc(projectName) {
+  const path = `${projectName}/src`
+  try {
+    await fs.access(path, fs.constants.F_OK)
+  } catch (e) {
+    await fs.mkdir(path)
+    console.log(`Création du dossier ${path}`);
+  }
+}
 
 export async function createPackageJsonFile(projectName, scriptId) {
   const path = `${projectName}/package.json`
@@ -46,13 +55,19 @@ export async function createPackageJsonFile(projectName, scriptId) {
 export async function createIndexjsFile(projectName) {
   try {
     await fs.access(projectName, fs.constants.F_OK)
-    await fs.writeFile(`${projectName}/gas/index.js`, await newIndexJsFile())
-    console.log("Création du fichier ./gas/index.js");
+    await fs.writeFile(`${projectName}/src/index.js`, await newIndexJsFile())
+    console.log("Création du fichier ./src/index.js");
   } catch (e) {
     console.error("Impossible de créer le fichier index.js")
   }
 }
 
+/**
+ *
+ *
+ * @export
+ * @param {*} projectName
+ */
 export async function createGitignoreFile(projectName) {
   try {
     await fs.access(projectName, fs.constants.F_OK)
@@ -63,6 +78,12 @@ export async function createGitignoreFile(projectName) {
   }
 }
 
+/**
+ *
+ *
+ * @export
+ * @param {*} projectName
+ */
 export async function createReadmeFile(projectName) {
   try {
     await fs.access(projectName, fs.constants.F_OK)
@@ -85,19 +106,21 @@ async function newPackageJsonFile(projectName, devScriptId = "[id]") {
       "name": "${projectName}",
       "version": "1.0.0",
       "description": "",
-      "main": "index.js",
+      "source": "src/index.js",
+      "main": "dist/.js",
       "scripts": {
-        "clasp/dev": "npx clasp-env --folder gas --scriptId ${devScriptId} && cd gas && clasp push -w",
-        "clasp/qa": "npx clasp-env --folder gas --scriptId [id] && cd gas && clasp push -w",
-        "clasp/prod": "npx clasp-env --folder gas --scriptId [id] && cd gas && clasp push -w",
-        "clasp/pull": "cd gas && clasp pull",
-        "clasp/clone": "clasp clone '${devScriptId}' --rootDir ./gas"
+        "build/dev": "parcel build npx clasp-env --folder dist --scriptId ${devScriptId} && cd dist && clasp push -w",
+        "build/qa": "parcel build npx clasp-env --folder dist --scriptId [id] && cd dist && clasp push -w",
+        "build/prod": "parcel build npx clasp-env --folder dist --scriptId [id] && cd dist && clasp push -w",
+        "clasp/pull": "cd dist && clasp pull",
+        "clasp/clone": "clasp clone '${devScriptId}' --rootDir ./dist"
       },
       "keywords": [],
       "author": "",
       "license": "ISC",
       "devDependencies": {
-        "@types/google-apps-script": "^1.0.55"
+        "@types/google-apps-script": "^1.0.55",
+        "parcel": "latest"
       }
     }`;
 }
@@ -109,19 +132,7 @@ async function newPackageJsonFile(projectName, devScriptId = "[id]") {
  * @param {string} [devScriptId="[id]"]
  */
 function updatePackageJsonFile(projectName, devScriptId = "[id]") {
-  const name = `"name": "${projectName}",`
-  const scripts = `"scripts": {
-    "clasp/dev": "npx clasp-env --folder gas --scriptId ${devScriptId} && cd gas && clasp push -w",
-    "clasp/qa": "npx clasp-env --folder gas --scriptId [id] && cd gas && clasp push -w",
-    "clasp/prod": "npx clasp-env --folder gas --scriptId [id] && cd gas && clasp push -w",
-    "clasp/pull": "cd gas && clasp pull",
-    "clasp/clone": "clasp clone '${devScriptId}' --rootDir ./gas"
-  },`
-  const devDependencies = `"devDependencies": {
-    "@types/google-apps-script": "^1.0.55"
-  }`
-
-
+  
 }
 
 /**
@@ -130,7 +141,7 @@ function updatePackageJsonFile(projectName, devScriptId = "[id]") {
  * @return {String} A default hello world function
  */
 async function newIndexJsFile() {
-  return "function hello() {\n\tconsole.log('Hello World')\n}";
+  return "function hello() {\n\tLogger.log('Hello World')\n}";
 }
 
 /**
@@ -142,9 +153,12 @@ async function newGitignoreFile() {
   return "node_modules\n**/.clasp.json\n";
 }
 
-
-
-
+/**
+ *
+ *
+ * @param {*} projectName
+ * @return {*} 
+ */
 async function newReadmeFile(projectName) {
   return (
     `# ${projectName}\n[![gasp](https://img.shields.io/badge/build%20with-gasp-blue)](https://github.com/m1ckc3b/gasp-cli)

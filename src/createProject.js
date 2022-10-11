@@ -1,6 +1,6 @@
 import afterInit from "./afterInit.js";
 import execScriptBash from "./execScriptBash.js";
-import { createProjectFolder, createSubfolder, createPackageJsonFile, createIndexjsFile, createGitignoreFile, createReadmeFile } from "./utils.js";
+import { createProjectFolder, createSubfolderDist, createSubfolderSrc, createPackageJsonFile, createIndexjsFile, createGitignoreFile, createReadmeFile } from "./utils.js";
 
 
 /**
@@ -12,7 +12,8 @@ import { createProjectFolder, createSubfolder, createPackageJsonFile, createInde
 export default async function createANewProject(projectName, scriptId) {
   try {
    await createProjectFolder(projectName)
-   await createSubfolder(projectName)
+   await createSubfolderDist(projectName)
+   await createSubfolderSrc(projectName)
    await createPackageJsonFile(projectName, scriptId)
    await createIndexjsFile(projectName)
    await createGitignoreFile(projectName)
