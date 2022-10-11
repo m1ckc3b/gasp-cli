@@ -1,4 +1,5 @@
 import afterInit from "./afterInit.js";
+import execScriptBash from "./execScriptBash.js";
 import { createProjectFolder, createSubfolder, createPackageJsonFile, createIndexjsFile, createGitignoreFile, createReadmeFile } from "./utils.js";
 
 
@@ -16,6 +17,7 @@ export default async function createANewProject(projectName, scriptId) {
    await createIndexjsFile(projectName)
    await createGitignoreFile(projectName)
    await createReadmeFile(projectName)
+   await execScriptBash(projectName)
    await afterInit(projectName)
   } catch (e) {
     console.error(`Impossible de créer le nouveau projet ${projectName} : `+e.message);
