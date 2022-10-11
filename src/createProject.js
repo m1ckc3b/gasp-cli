@@ -1,10 +1,6 @@
-const {
-  createFolder,
-  createFile,
-  createPackageJsonFile,
-  createIndexJsFile,
-  createGitignoreFile,
-} = require("./utils");
+import afterInit from "./afterInit.js";
+import { createProjectFolder, createSubfolder, createPackageJsonFile, createIndexjsFile, createGitignoreFile } from "./utils.js";
+
 
 /**
  * Create a new gas project
@@ -12,29 +8,15 @@ const {
  * @param {*} projectName - Name given to the project.
  * @return void
  */
-function createANewProject(projectName, scriptId) {
+export default async function createANewProject(projectName, scriptId) {
   try {
-    console.log("On va créer un nouveau projet ;)");
-    createFolder(projectName);
-    createFile(
-      projectName,
-      "package.json",
-      createPackageJsonFile(projectName, scriptId)
-    );
-    createFile(projectName, ".gitignore", createGitignoreFile());
-
-    createFolder(`${projectName}/gas`);
-    createFile(`${projectName}/gas`, "index.js", createIndexJsFile());
-
-    console.log(
-      `Ton projet ${projectName} est créé.\nTape 'cd ${projectName} && npm i'\nEnsuite, utilise la commande 'npm run clasp/clone' pour récupérer ton projet en local.
-  `
-    );
+   await createProjectFolder(projectName)
+   await createSubfolder(projectName)
+   await createPackageJsonFile(projectName, scriptId)
+   await createIndexjsFile(projectName)
+   await createGitignoreFile(projectName)
+   await afterInit(projectName)
   } catch (e) {
-    console.error("Impossible de créer le nouveau projet " + projectName);
+    console.error(`Impossible de créer le nouveau projet ${projectName} : `+e.message);
   }
 }
-
-module.exports = {
-  createANewProject,
-};

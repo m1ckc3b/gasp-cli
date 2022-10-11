@@ -1,32 +1,66 @@
+import * as fs from "node:fs/promises"
+
 /**
  * Create a new folder
  *
  * @param {String} name - Name given to the new folder
- * @return {Boolean} return true if created
  */
-function createFolder(name) {
-  if (!fs.existsSync(name)) {
-    fs.mkdir(name, (err) => {
-      if (err) {
-        console.error("Error: impossible to create the folder");
-        return;
-      }
-      return true;
-    });
+export async function createProjectFolder(projectName) {
+  try {
+    await fs.access(projectName, fs.constants.F_OK)
+  } catch (e) {
+    await fs.mkdir(projectName)
+    console.log(`Création du projet ${projectName}`);
   }
 }
 
 /**
- * Create a new file
  *
- * @param {String} dir - The parent directory where to create it
- * @param {String} name - The name given to it
- * @param {String} content - The content to push into it
+ *
+ * @param {*} dir
+ * @param {*} name
  */
-function createFile(dir, name, content) {
-  fs.writeFile(`${dir}/${name}`, content, (err) => {
-    if (err) console.error(`Impossible de créer le fichier ${name}`);
-  });
+export async function createSubfolder(projectName) {
+  const path = `${projectName}/gas`
+  try {
+    await fs.access(path, fs.constants.F_OK)
+  } catch (e) {
+    await fs.mkdir(path)
+    console.log(`Création du dossier ${path}`);
+  }
+}
+
+
+export async function createPackageJsonFile(projectName, scriptId) {
+  const path = `${projectName}/package.json`
+
+  try {
+    await fs.access(projectName, fs.constants.F_OK)
+    await fs.writeFile(path, await newPackageJsonFile(projectName, scriptId))
+    console.log("Création du package.json");
+  } catch (e) {
+    console.error("Impossible de créer le fichier package.json")
+  }
+}
+
+export async function createIndexjsFile(projectName) {
+  try {
+    await fs.access(projectName, fs.constants.F_OK)
+    await fs.writeFile(`${projectName}/gas/index.js`, await newIndexJsFile())
+    console.log("Création du fichier ./gas/index.js");
+  } catch (e) {
+    console.error("Impossible de créer le fichier index.js")
+  }
+}
+
+export async function createGitignoreFile(projectName) {
+  try {
+    await fs.access(projectName, fs.constants.F_OK)
+    await fs.writeFile(`${projectName}/.gitignore`, await newGitignoreFile())
+    console.log("Création du fichier .gitignore");
+  } catch (e) {
+    console.error("Impossible de créer le fichier .gitignore")
+  }
 }
 
 /**
@@ -36,7 +70,7 @@ function createFile(dir, name, content) {
  * @param {string} [devScriptId="[id]"] - The GAS project Id or a default string
  * @return {string} The personnalized content push to it
  */
-function createPackageJsonFile(projectName, devScriptId = "[id]") {
+async function newPackageJsonFile(projectName, devScriptId = "[id]") {
   return `{
       "name": "${projectName}",
       "version": "1.0.0",
@@ -85,7 +119,7 @@ function updatePackageJsonFile(projectName, devScriptId = "[id]") {
  *
  * @return {String} A default hello world function
  */
-function createIndexJsFile() {
+async function newIndexJsFile() {
   return "function hello() {\n\tconsole.log('Hello World')\n}";
 }
 
@@ -94,14 +128,8 @@ function createIndexJsFile() {
  *
  * @return {String} A minimum value needed to create it
  */
-function createGitignoreFile() {
+async function newGitignoreFile() {
   return "node_modules\n**/.clasp.json\n";
 }
 
-module.exports = {
-  createFolder,
-  createFile,
-  createPackageJsonFile,
-  createIndexJsFile,
-  createGitignoreFile,
-};
+

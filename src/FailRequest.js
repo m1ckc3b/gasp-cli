@@ -1,10 +1,6 @@
-const { exit } = require('process')
+import exit from "node:process"
 
-function failRequest() {
+export default function failRequest() {
   console.log("Désolé, cette commande n'existe pas");
   exit(1)
-}
-
-module.exports = {
-  failRequest
 }

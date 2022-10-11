@@ -1,27 +1,31 @@
-#! /usr/bin/env node
-const fs = require("fs");
-const path = require("path");
-const { createANewProject } = require("../src/createProject");
-const { failRequest } = require("../src/FailRequest");
-const { getHelp } = require("../src/help");
-const { initProject } = require("../src/initProject");
+#! /usr/bin/env -S node --no-warnings
+import path from "node:path";
+import {argv} from "node:process";
+import createANewProject from "../src/createProject.js";
+import failRequest from "../src/FailRequest.js";
+import getVersion from "../src/getVersion.js";
+import getHelp from "../src/help.js";
+import initProject from "../src/initProject.js";
 
-const cmd = process.argv.slice(2);
-const dir = cmd[0];
-const projectName = cmd[1]
-const scriptId = cmd[2];
+const args = argv.slice(2);
+const cmd = args[0].toLocaleLowerCase()
+const projectName = args[1] || "new-gasp-project"
+const scriptId = args[2]
 
-switch (dir) {
+switch (cmd) {
   case "create" || "-c":
-    createANewProject(projectName.toLocaleLowerCase(), scriptId)
+    console.log("Hello, je suis gaspi et je vais créer ton nouveau projet 😜");
+    createANewProject(projectName.toLocaleLowerCase(), scriptId);
     break;
   case "init" || "-i":
-    initProject()
-    break
+    initProject();
+    break;
   case "help" || "-h":
-    getHelp()
-    break
+    getHelp();
+    break;
+  case "version" || "-v":
+    getVersion();
+    break;
   default:
-    failRequest()
-
+    failRequest();
 }

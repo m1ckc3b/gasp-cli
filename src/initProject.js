@@ -1,10 +1,6 @@
-const { exit } = require("process")
+import {exit} from "node:process"
 
-function initProject() {
+export default function initProject() {
   console.log("Désolé, cette commande n'est pas disponible pour le moment.");
   exit(1)
-}
-
-module.exports = {
-  initProject
 }
