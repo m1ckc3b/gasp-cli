@@ -4,13 +4,13 @@ const path = require("path");
 
 const cmd = process.argv.slice(2);
 const dir = cmd[0];
-const projectName = cmd[1].toLocaleLowerCase();
+const projectName = cmd[1];
 const scriptId = cmd[2];
 
 switch (dir) {
   case "create" || "-c":
     console.log("On va créer un nouveau projet ;)");
-    initProject(projectName, scriptId);
+    initProject(projectName.toLocaleLowerCase(), scriptId);
     break;
   case "help" || "-h":
     console.log(
