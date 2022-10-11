@@ -107,11 +107,12 @@ async function newPackageJsonFile(projectName, devScriptId = "[id]") {
       "version": "1.0.0",
       "description": "",
       "source": "src/index.js",
-      "main": "dist/.js",
+      "main": "dist/Code.js",
       "scripts": {
-        "build/dev": "parcel build npx clasp-env --folder dist --scriptId ${devScriptId} && cd dist && clasp push -w",
-        "build/qa": "parcel build npx clasp-env --folder dist --scriptId [id] && cd dist && clasp push -w",
-        "build/prod": "parcel build npx clasp-env --folder dist --scriptId [id] && cd dist && clasp push -w",
+        "build": "parcel build",
+        "build/dev": "npx clasp-env --folder dist --scriptId ${devScriptId} && cd dist && clasp push -w",
+        "build/qa": "npx clasp-env --folder dist --scriptId [id] && cd dist && clasp push -w",
+        "build/prod": "npx clasp-env --folder dist --scriptId [id] && cd dist && clasp push -w",
         "clasp/pull": "cd dist && clasp pull",
         "clasp/clone": "clasp clone '${devScriptId}' --rootDir ./dist"
       },
