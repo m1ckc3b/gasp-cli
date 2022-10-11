@@ -5,7 +5,6 @@
   "main": "./bin/index.js",
   "type": "module",
   "scripts": {
-    "test": "node ./Tests/index.js",
     "build": "node ./bin/index.js"
   },
   "repository": {
