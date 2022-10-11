@@ -63,6 +63,16 @@ export async function createGitignoreFile(projectName) {
   }
 }
 
+export async function createReadmeFile(projectName) {
+  try {
+    await fs.access(projectName, fs.constants.F_OK)
+    await fs.writeFile(`${projectName}/readme.md`, await newReadmeFile(projectName))
+    console.log("Création du fichier readme.md");
+  } catch (e) {
+    console.error("Impossible de créer le fichier readme.md")
+  }
+}
+
 /**
  * Create the personnalized package.json file
  *
@@ -133,3 +143,12 @@ async function newGitignoreFile() {
 }
 
 
+
+
+async function newReadmeFile(projectName) {
+  return (
+    `# ${projectName}\n[![gasp](https://img.shields.io/badge/build%20with-gasp-blue)](https://github.com/m1ckc3b/gasp-cli)
+    
+    `
+  )
+}
