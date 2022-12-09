@@ -1,4 +1,5 @@
 import * as fs from "node:fs/promises"
+import path from "node:path";
 
 /**
  * Create a new folder
@@ -21,22 +22,22 @@ export async function createProjectFolder(projectName) {
  * @param {*} name
  */
 export async function createSubfolder(projectName) {
-  const path = `${projectName}/gas`
+  const dir = path.join(projectName, 'gas')
   try {
-    await fs.access(path, fs.constants.F_OK)
+    await fs.access(dir, fs.constants.F_OK)
   } catch (e) {
-    await fs.mkdir(path)
-    console.log(`Création du dossier ${path}`);
+    await fs.mkdir(dir)
+    console.log(`Création du dossier ${dir}`);
   }
 }
 
 
 export async function createPackageJsonFile(projectName, scriptId) {
-  const path = `${projectName}/package.json`
+  const dir = path.join(projectName, 'package.json')
 
   try {
     await fs.access(projectName, fs.constants.F_OK)
-    await fs.writeFile(path, await newPackageJsonFile(projectName, scriptId))
+    await fs.writeFile(dir, await newPackageJsonFile(projectName, scriptId))
     console.log("Création du package.json");
   } catch (e) {
     console.error("Impossible de créer le fichier package.json")
@@ -46,7 +47,8 @@ export async function createPackageJsonFile(projectName, scriptId) {
 export async function createIndexjsFile(projectName) {
   try {
     await fs.access(projectName, fs.constants.F_OK)
-    await fs.writeFile(`${projectName}/gas/index.js`, await newIndexJsFile())
+    const dir = path.join(projectName, 'gas', 'index.js')
+    await fs.writeFile(dir, await newIndexJsFile())
     console.log("Création du fichier ./gas/index.js");
   } catch (e) {
     console.error("Impossible de créer le fichier index.js")
@@ -56,7 +58,8 @@ export async function createIndexjsFile(projectName) {
 export async function createGitignoreFile(projectName) {
   try {
     await fs.access(projectName, fs.constants.F_OK)
-    await fs.writeFile(`${projectName}/.gitignore`, await newGitignoreFile())
+    const dir = path.join(projectName, '.gitignore')
+    await fs.writeFile(dir, await newGitignoreFile())
     console.log("Création du fichier .gitignore");
   } catch (e) {
     console.error("Impossible de créer le fichier .gitignore")
@@ -66,7 +69,8 @@ export async function createGitignoreFile(projectName) {
 export async function createReadmeFile(projectName) {
   try {
     await fs.access(projectName, fs.constants.F_OK)
-    await fs.writeFile(`${projectName}/readme.md`, await newReadmeFile(projectName))
+    const dir = path.join(projectName, 'readme.md')
+    await fs.writeFile(dir, await newReadmeFile(projectName))
     console.log("Création du fichier readme.md");
   } catch (e) {
     console.error("Impossible de créer le fichier readme.md")
