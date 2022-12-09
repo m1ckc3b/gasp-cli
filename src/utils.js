@@ -4,7 +4,8 @@ import path from "node:path";
 /**
  * Create a new folder
  *
- * @param {String} name - Name given to the new folder
+ * @param {string} name - Name given to the new folder
+ * @export void
  */
 export async function createProjectFolder(projectName) {
   try {
@@ -16,10 +17,10 @@ export async function createProjectFolder(projectName) {
 }
 
 /**
+ * Create a subfolder for apps script files
  *
- *
- * @param {*} dir
- * @param {*} name
+ * @param {string} projectName - Name given to the root folder
+ * @export void 
  */
 export async function createSubfolder(projectName) {
   const dir = path.join(projectName, 'gas')
@@ -31,7 +32,13 @@ export async function createSubfolder(projectName) {
   }
 }
 
-
+/**
+ * Create a package.json file.
+ *
+ * @export void
+ * @param {string} projectName - Name given to the root folder
+ * @param {string} scriptId - Google Apps Script Id
+ */
 export async function createPackageJsonFile(projectName, scriptId) {
   const dir = path.join(projectName, 'package.json')
 
@@ -44,6 +51,12 @@ export async function createPackageJsonFile(projectName, scriptId) {
   }
 }
 
+/**
+ * Create index.js file into gas subfolder
+ *
+ * @export void
+ * @param {string} projectName - Name given to the root folder
+ */
 export async function createIndexjsFile(projectName) {
   try {
     await fs.access(projectName, fs.constants.F_OK)
@@ -55,6 +68,12 @@ export async function createIndexjsFile(projectName) {
   }
 }
 
+/**
+ * Create a gitignore file.
+ *
+ * @export void
+ * @param {string} projectName - Name given to the root folder
+ */
 export async function createGitignoreFile(projectName) {
   try {
     await fs.access(projectName, fs.constants.F_OK)
@@ -66,6 +85,12 @@ export async function createGitignoreFile(projectName) {
   }
 }
 
+/**
+ * Create a readme file
+ *
+ * @export void
+ * @param {string} projectName - Name given to the root folder
+ */
 export async function createReadmeFile(projectName) {
   try {
     await fs.access(projectName, fs.constants.F_OK)
